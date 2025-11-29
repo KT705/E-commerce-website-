@@ -3,18 +3,21 @@ import { createContext, useContext, useState, useEffect, useCallback, useMemo } 
 // not needed when using backend api and will need to import useCallback and useMeme from react and apiService.js file will replace all these 3 imports after u import it
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged, signOut } from "firebase/auth";
-import { getFirestore, doc, setDoc, onSnapshot, getDocs, addDoc, collection } from "firebase/firestore";
+import { getFirestore, doc, setDoc, onSnapshot, getDoc, addDoc, collection } from "firebase/firestore";
 import { serverTimestamp } from "firebase/firestore";
 
 const localFallbackConfig = {
-    apiKey: "AIzaSyCNLDdZVvkZBYo-BSx_oBhfP7bmJH1wBzw",
-    authDomain: "my-e-commerce-project-bbb0c.firebaseapp.com",
-    projectId: "my-e-commerce-project-bbb0c",
-    storageBucket: "my-e-commerce-project-bbb0c.firebasestorage.app",
-    messagingSenderId: "326725141896",
-    appId: "1:326725141896:web:c4503f81b18907be31a63d",
-    measurementId: "G-4XGLVF4543"
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "",
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "",
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "",
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "",
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "",
+    appId: import.meta.env.VITE_FIREBASE_APP_ID || "",
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || ""
 };
+
+console.log("API Key from env:", import.meta.env.VITE_FIREBASE_API_KEY);
+console.log("Full config:", localFallbackConfig);
 
 //------ added for the fire base, with backend this is no longer needed
 
@@ -58,6 +61,7 @@ export const CartProvider = ({ children }) => {
     const [userId, setUserId] = useState(null);
     const [isAuthReady, setIsAuthReady] = useState(false);
     const [userEmail, setUserEmail] = useState(null);
+    const [userAvatar, setUserAvatar] = useState(null); 
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -76,7 +80,8 @@ export const CartProvider = ({ children }) => {
             setIsLoggedIn(false);
             setUserName(null);
             setUserId(null);
-            setUserEmail(null)
+            setUserEmail(null);
+            setUserAvatar(null);
             console.log("User successfully logged out");
             setError(null);
         }catch(e){
@@ -156,6 +161,7 @@ export const CartProvider = ({ children }) => {
             let currentUserName = user ? user.displayName : null;
             let currentIsLoggedIn = user ? !user.isAnonymous : false;
             let currentUserEmail = user ? user.email : null;
+            let currentUserAvatar = null;
 
             if(!currentUserId){
                 try{
@@ -179,6 +185,32 @@ export const CartProvider = ({ children }) => {
                     return;
                 }
             }
+
+            if (currentUserId && currentIsLoggedIn) {
+                try {
+                    const userDocRef = doc(db, `artifacts/${appId}/public/data/userProfiles/${currentUserId}`);
+                    const userDoc = await getDoc(userDocRef);
+                    
+                    if (userDoc.exists()) {
+                        const profileData = userDoc.data();
+                        currentUserAvatar = profileData.avatar;
+                        currentUserName = profileData.name || currentUserName;
+                        console.log("User profile loaded from Firestore:", profileData);
+                    } else {
+                        // Fallback: Create avatar from username or email
+                        currentUserAvatar = currentUserName 
+                            ? currentUserName.charAt(0).toUpperCase() 
+                            : currentUserEmail?.charAt(0).toUpperCase() || '?';
+                    }
+                } catch (e) {
+                    console.error("Failed to fetch user profile:", e);
+                    // Fallback avatar
+                    currentUserAvatar = currentUserName 
+                        ? currentUserName.charAt(0).toUpperCase() 
+                        : currentUserEmail?.charAt(0).toUpperCase() || '?';
+                }
+            }
+
             setUserId(currentUserId);
             setUserName(currentUserName);
             setUserEmail(currentUserEmail);
@@ -420,6 +452,7 @@ export const CartProvider = ({ children }) => {
         cartTotal,
         clearCart,
         placeOrder,
+        userAvatar,
         userName,
         userEmail,
         loading,
