@@ -1,6 +1,7 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth, signInWithCustomToken, signInAnonymously, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
-import { getFirestore, collection, getDocs, doc, setDoc } from "firebase/firestore";
+import { getFirestore, collection, getDocs, doc, setDoc, getDoc } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 //export const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
 
@@ -16,6 +17,7 @@ const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
 export const db = getFirestore(app);
 export const auth = getAuth(app);
+export const storage = getStorage(app);
 
 
 export const authenticateUser = async () => {
@@ -68,26 +70,31 @@ export const signUp = async (email, password, username) => {
 
         await updateProfile(user, { displayName: username });
 
+        const avatar = username.charAt(0).toUpperCase();
+
         const userDocRef = doc(db, `artifacts/${appId}/public/data/userProfiles/${user.uid}`);
         await setDoc(userDocRef, {
             name: username,
             email: email,
-            userId: user.id,
+            userId: user.uid,
+            avatar: avatar,
             createdAt: new Date() 
         });
         return user;
 
     }catch(error){
-        throw new Error(error.code || "An unexpected error occurred during sign up.");
+        console.error("Sign up error:", error);
+        throw error;
     }
 };
 
-export const signIn = async (email, passsword) => {
+export const signIn = async (email, password) => {
     try{
-        const userCredential = await signInWithEmailAndPassword(auth, email, passsword);
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
         return userCredential.user;
     }catch(error){
-        throw new Error(error.code || "An unexpected error occured during signIn");
+        console.error("Sign in error:", error);
+        throw error;
     }
 };
 
@@ -96,6 +103,21 @@ export const logOut = async () => {
         await signOut(auth);
     }catch(error){
         console.error("Error during sign out:", error);
-        throw new Error(error.code || "An unexpected error occurred during sign out");
+        throw error;
+    }
+};
+
+export const getUserProfile = async (userId) => {
+    try {
+        const userDocRef = doc(db, `artifacts/${appId}/public/data/userProfiles/${userId}`);
+        const userDoc = await getDoc(userDocRef);
+        
+        if (userDoc.exists()) {
+            return userDoc.data();
+        }
+        return null;
+    } catch (error) {
+        console.error("Error fetching user profile:", error);
+        return null;
     }
 };

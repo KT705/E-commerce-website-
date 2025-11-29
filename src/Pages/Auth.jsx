@@ -16,13 +16,16 @@ const Auth = () => {
         'auth/user-disabled': 'This user account has been disabled.',
         'auth/user-not-found': 'No account found with this email. Please sign up or check your details.',
         'auth/wrong-password': 'The password you entered is incorrect.',
+        'auth/invalid-credential': 'Invalid email or password. Please check your credentials and try again.', // NEW
         'auth/email-already-in-use': 'This email is already registered. Try logging in instead.',
         'auth/weak-password': 'The password must be at least 6 characters long.',
         'auth/operation-not-allowed': 'Email/password accounts are not enabled. (Admin setting issue).',
         'auth/too-many-requests': 'Access temporarily blocked due to too many failed attempts. Try again later.',
         'auth/requires-recent-login': 'Please log out and log in again to perform this action.',
+        'auth/network-request-failed': 'Network error. Please check your internet connection and try again.',
+        'auth/invalid-login-credentials': 'Invalid email or password. Please try again.', // NEW (another variant)
     };
-
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null);
@@ -33,14 +36,23 @@ const Auth = () => {
                 await signIn(email, password)
             }else{
                 await signUp(email, password, username);
+                await new Promise(resolve => setTimeout(resolve, 500));
             }
 
             navigate('/');
         }catch(err){
-            const errorCode = err.message || 'auth/unknown-error';
-            const friendlyMessage = errorMap[errorCode] || 'An unexpected error occurred. Please try again.';
+            let errorCode = 'auth/unknown-error';
+            if (err.code) {
+                errorCode = err.code;
+            } else if (err.message && err.message.includes('auth/')) {
+                // Extract error code from message if needed
+                const match = err.message.match(/auth\/[a-z-]+/);
+                if (match) errorCode = match[0];
+            }
+            const friendlyMessage = errorMap[errorCode] || 'Something went wrong. Please try again.';
 
-            console.error("Auth Error:", errorCode, friendlyMessage);
+            console.error("Auth Error:", errorCode, err);
+            console.error("Friendly Message:", friendlyMessage);
             setError(friendlyMessage);
         }finally{
             setLoading(false);
@@ -50,7 +62,7 @@ const Auth = () => {
     return(
         <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4 pt-20">
             <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-2xl border border-gray-200">
-                <h2 className="text-3xl font-extrabold text-gray-900 mb-6 text-center">
+                <h2 className="text-3xl font-bold text-black mb-6 text-center">
                     {isLoginView ? 'Sign In' : 'Create Account'}
                 </h2>
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -78,7 +90,7 @@ const Auth = () => {
                             required
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:ring-gray-500 focus:border-gray-500"
                             placeholder="you@example.com"
                         />
                     </div>
@@ -91,7 +103,7 @@ const Auth = () => {
                             required
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:ring-indigo-500 focus:border-indigo-500"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:ring-gray-500 focus:border-gray-500"
                             placeholder="Min. 6 characters"
                         />
                         {!isLoginView && (
@@ -110,8 +122,8 @@ const Auth = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-lg font-bold text-white transition duration-300 
-                            ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700 transform hover:scale-[1.01]'}`}
+                        className={`w-full flex justify-center py-3 px-4  rounded-lg shadow-sm text-lg font-bold text-white cursor-pointer transition duration-300 
+                            ${loading ? 'bg-gray-400 cursor-not-allowed' : 'bg-black hover:bg-gray-800 transform hover:scale-[1.01]'}`}
                     >
                         {loading ? (
                             <i className="fas fa-spinner fa-spin mr-2"></i> // Loading Spinner
@@ -132,7 +144,7 @@ const Auth = () => {
                                 setUsername('') // Clear inputs when switching
                                 setPassword('');
                             }}
-                            className="font-semibold text-black hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-700 focus:ring-offset-2"
+                            className="font-semibold cursor-pointer text-black hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2"
                         >
                             {isLoginView ? 'Sign Up Now' : 'Sign In'}
                         </button>
