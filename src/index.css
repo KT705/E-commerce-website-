@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+
+
+html{
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   background-color: #bbb3b3;
@@ -14,4 +21,5 @@ body {
   justify-content: center;
   width: 100%;
   min-height: 100vh;
+  overflow-x: hidden;
 }

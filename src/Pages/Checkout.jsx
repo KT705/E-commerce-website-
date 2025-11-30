@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useCart } from '../context/CartContex.jsx';
 import { useNavigate, Link } from 'react-router-dom';
 
+
 function Checkout(){
     const {cartTotal, clearCart, placeOrder, cartItems} = useCart();
     const navigate = useNavigate();
@@ -82,14 +83,14 @@ function Checkout(){
     return (
         <div className="min-h-screen pt-24 pb-10 bg-gray-50 flex justify-center">
             <div className="max-w-6xl w-full p-4 lg:p-8">
-                <h1 className="text-4xl font-extrabold text-gray-900 mb-8 border-b pb-4">
+                <h1 className="text-3xl text-center font-bold text-black mb-8 border-b pb-4">
                     Secure Checkout
                 </h1>
 
                 {cartTotal === 0 ? (
                     <div className="text-center p-12 bg-white rounded-xl shadow-lg mt-8">
-                        <p className="text-2xl text-gray-600 font-semibold">Your cart is empty. Please add items to checkout.</p>
-                        <Link to="/products" className="mt-4 inline-block px-6 py-3 bg-black text-white rounded-lg hover:bg-indigo-700 transition">
+                        <p className="text-xl text-black font-semibold">Your cart is empty. Please add items to checkout.</p>
+                        <Link to="/products" className="mt-4 inline-block px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-700 transition">
                             Go to Products
                         </Link>
                     </div>
@@ -173,17 +174,17 @@ function Checkout(){
                         <div className="lg:w-1/3 h-fit bg-indigo-50 p-6 rounded-xl shadow-lg border border-indigo-200 sticky top-28">
                             <h2 className="text-2xl font-semibold mb-4 text-black border-b pb-3">Order Summary</h2>
 
-                            <div className="flex justify-between text-lg mb-2 text-gray-700">
+                            <div className="flex justify-between text-md mb-2 text-gray-800">
                                 <span>Subtotal:</span>
                                 <span className="font-medium">${cartTotal.toFixed(2)}</span>
                             </div>
 
-                            <div className="flex justify-between text-lg mb-4 text-gray-700">
+                            <div className="flex justify-between text-md mb-4 text-gray-800">
                                 <span>Shipping:</span>
                                 <span className="font-medium">FREE</span>
                             </div>
                             
-                            <div className="flex justify-between text-3xl font-bold pt-4 border-t border-indigo-300">
+                            <div className="flex justify-between text-xl font-bold pt-4 border-t border-indigo-300">
                                 <span>Order Total:</span>
                                 <span className="text-black">${cartTotal.toFixed(2)}</span>
                             </div>
@@ -203,7 +204,7 @@ function Checkout(){
                             {/* The Submit Button */}
                             <button
                                 type="submit"
-                                className="w-full py-4 bg-black text-white font-bold text-lg rounded-xl shadow-md hover:bg-black transition duration-300"
+                                className="w-full py-4 bg-black text-white font-bold text-md rounded-xl shadow-md cursor-pointer hover:bg-gray-900 transition duration-300"
                             >
                                 Place Order (Pay ${cartTotal.toFixed(2)})
                             </button>

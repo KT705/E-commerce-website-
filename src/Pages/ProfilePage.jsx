@@ -24,7 +24,7 @@ function ProfilePage() {
             <div className="flex flex-col items-center justify-center min-h-screen pt-20 p-4">
                 <div className="max-w-md w-full bg-white p-8 rounded-xl shadow-2xl border border-gray-100 text-center">
                     <p className="text-2xl font-bold text-red-600 mb-4">Access Denied</p>
-                    <p className="text-gray-600">You must be signed in to view your profile.</p>
+                    <p className="text-gray-950">You must be signed in to view your profile.</p>
                 </div>
             </div>
         );
@@ -33,12 +33,12 @@ function ProfilePage() {
     return (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center pt-20 p-4">
             <div className="max-w-3xl w-full bg-white p-8 rounded-xl shadow-2xl border border-gray-100">
-                <h1 className="text-3xl font-extrabold text-gray-900 mb-6 border-b pb-3">My Profile</h1>
+                <h1 className="text-3xl font-bold text-black mb-6 border-b pb-3">My Profile</h1>
                 <div className="flex flex-col md:flex-row items-start md:items-center space-y-6 md:space-y-0 md:space-x-8">
                     
                     <div className="shrink-0">
                         <div 
-                            className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-blue-600 text-white flex items-center justify-center text-4xl font-extrabold shadow-lg ring-4 ring-indigo-200"
+                            className="w-24 h-24 md:w-32 md:h-32 rounded-full bg-gray-800 text-white flex items-center justify-center text-4xl font-bold shadow-lg ring-4 ring-gray-200"
                             title={userName}
                         >
                             {profileInitial}
@@ -74,7 +74,7 @@ function ProfilePage() {
                     
 
                     <button
-                        className="w-full md:w-auto mt-3 md:mt-0 md:ml-4 px-6 py-3 bg-indigo-500 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-600 transition duration-150"
+                        className="w-full md:w-auto mt-3 md:mt-0 md:ml-4 px-6 py-3 cursor-pointer bg-zinc-800 text-white font-semibold rounded-lg shadow-md hover:bg-zinc-900 transition duration-150"
                         onClick={() => navigate('/history')} 
                     >
                         View Order History

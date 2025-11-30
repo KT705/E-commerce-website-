@@ -89,11 +89,11 @@ const OrderHistory = () => {
     return (
         <div className="min-h-screen pt-20 pb-12 bg-gray-50 p-4 sm:p-8">
             <header className="mb-8 mt-20 text-center sm:text-left">
-                <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight flex items-center justify-center sm:justify-start">
+                <h1 className="text-3xl font-bold text-black tracking-tight flex items-center justify-center sm:justify-start">
                     <Clock className="w-8 h-8 mr-3 text-black" />
                     Order History
                 </h1>
-                <p className="mt-2 text-lg text-gray-600">
+                <p className="mt-2 text-lg text-gray-950">
                     Review your past purchases. You have <span className="font-semibold text-black">{orders.length}</span> order{orders.length !== 1 ? 's' : ''} on record.
                 </p>
             </header>
@@ -101,11 +101,11 @@ const OrderHistory = () => {
             <div className="space-y-6">
                 {orders.length === 0 ? (
                     <div className="p-12 bg-white rounded-2xl shadow-xl text-center border-2 border-dashed border-gray-300">
-                        <p className="text-xl font-semibold text-gray-700">No Orders Found</p>
-                        <p className="mt-2 mb-2 text-gray-500">Looks like you haven't placed any orders yet. Visit the shop to get started!</p>
+                        <p className="text-xl text-black font-bold">No Orders Found</p>
+                        <p className="mt-2 mb-2 text-gray-900">Looks like you haven't placed any orders yet. Visit the shop to get started!</p>
                         <button
                         onClick={() => navigate('/')}
-                        className="w-full md:w-auto mt-3 md:mt-0 md:ml-4 px-6 py-3 bg-indigo-500 text-white font-semibold rounded-lg shadow-md hover:bg-indigo-600 transition duration-150"
+                        className="w-full md:w-auto mt-3 md:mt-0 md:ml-4 px-6 py-3 bg-black text-white font-semibold rounded-lg cursor-pointer shadow-md hover:bg-gray-900 transition duration-150"
                         >start shopping</button>
                     </div>
                 ) : (

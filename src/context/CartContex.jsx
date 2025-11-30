@@ -16,8 +16,6 @@ const localFallbackConfig = {
     measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || ""
 };
 
-console.log("API Key from env:", import.meta.env.VITE_FIREBASE_API_KEY);
-console.log("Full config:", localFallbackConfig);
 
 //------ added for the fire base, with backend this is no longer needed
 

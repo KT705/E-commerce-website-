@@ -12,12 +12,16 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.10.1",
     "@tailwindcss/vite": "^4.1.17",
+    "aos": "^2.3.4",
+    "emailjs-com": "^3.2.0",
     "firebase": "^12.6.0",
+    "framer-motion": "^12.23.24",
     "lucide-react": "^0.555.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.9.5",
+    "react-toastify": "^11.0.5",
     "tailwindcss": "^4.1.17"
   },
   "devDependencies": {
