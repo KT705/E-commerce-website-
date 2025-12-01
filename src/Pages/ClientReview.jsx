@@ -58,7 +58,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
         {/* Previous Button */}
         <button
           onClick={prevSlide}
-          className="absolute left-2 top-1/2 -translate-y-1/2 bg-zinc-800 p-3 rounded-full hover:bg-zinc-700"
+          className="absolute left-2 top-1/2 -translate-y-1/2 opacity-45 bg-zinc-800 p-3 rounded-full hover:bg-zinc-700"
         >
           <ChevronLeft size={28} />
         </button>
@@ -66,7 +66,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
         {/* Next Button */}
         <button
           onClick={nextSlide}
-          className="absolute right-2 top-1/2 -translate-y-1/2 bg-zinc-800 p-3 rounded-full hover:bg-zinc-700"
+          className="absolute right-2 top-1/2 -translate-y-1/2 opacity-45 bg-zinc-800 p-3 rounded-full hover:bg-zinc-700"
         >
           <ChevronRight size={28} />
         </button>

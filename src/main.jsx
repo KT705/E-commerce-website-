@@ -8,7 +8,7 @@ import { CartProvider } from './context/CartContex.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/E-commerce-website-">
       <CartProvider>
         <App />
       </CartProvider>  

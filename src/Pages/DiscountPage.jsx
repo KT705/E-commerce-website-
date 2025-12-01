@@ -16,7 +16,7 @@ function DiscountPromo() {
         <motion.h1
           initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
+          transition={{ delay: 2, duration: 2 }}
           className="text-5xl md:text-7xl font-extrabold leading-tight text-red-500"
         >
           50% OFF
@@ -25,7 +25,7 @@ function DiscountPromo() {
         <motion.h2
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
+          transition={{ delay: 2, duration: 2 }}
           className="text-3xl text-black md:text-4xl font-semibold"
         >
           Your First 10 Purchases
@@ -34,7 +34,7 @@ function DiscountPromo() {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.9, duration: 0.8 }}
+          transition={{ delay: 2, duration: 2 }}
           className="text-gray-950 text-center text-lg md:text-xl "
         >
           Shop smarter today! Enjoy massive discounts on your first ten items. Hurry limited time offer.
@@ -43,7 +43,7 @@ function DiscountPromo() {
         <motion.button
           initial={{ y: 40, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 1.2, duration: 0.8 }}
+          transition={{ delay: 2, duration: 2 }}
           onClick={() => navigate('/products')}
           className="px-8 py-3 bg-red-600 cursor-pointer hover:bg-red-700 text-white rounded-xl shadow-xl text-lg font-semibold transition-all"
         >

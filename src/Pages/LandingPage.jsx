@@ -35,7 +35,7 @@ function LandingPage() {
                         Make the best of who you are with Kt's collections
                     </h1>
 
-                    <p className="mt-4 text-lg text-black font-bold" data-aos="fade-up" >
+                    <p className="mt-4 text-lg text-shadow-lg/15 text-black font-bold" data-aos="fade-up" >
                         Shop from our amazing deals on fashion, electronics, <br /> and accessories.
                     </p>
 

@@ -73,7 +73,7 @@ function ContactPage() {
 
             <button
               type="submit"
-              className="w-full bg-blue-600 py-3 rounded-xl font-semibold hover:bg-blue-700 transition"
+              className="w-full bg-white py-3 text-black rounded-xl font-semibold cursor-pointer hover:bg-gray-400 transition"
             >
               {loading ? "Sending..." : "Send Message"}
             </button>
